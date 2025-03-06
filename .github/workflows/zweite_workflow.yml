@@ -1,0 +1,27 @@
+name: Repo to 7zip #Workflow Name
+
+on:
+    workflow_dispatch: #Manuelles Triggern des Workflows
+
+jobs:
+    Repo to 7zip:
+    runs-on: ubuntu-latest
+
+    steps: #7zip installieren
+        - name: Install 7zip
+        run: winget install 7zip.7zip
+
+        - name: Clone Introduction Repository #Repo klonen
+        uses: actions/checkout@v4
+        with:
+            repository: https://github.com/enesmat/Introduction.git
+            branch: main
+            
+        - name: Compress Repo to 7z #Repo komprimieren
+          run: 7z a introduction-repo.7z
+
+        - name: Print Message #Ausgabe
+        run: echo "Vorgang abgeschlossen"
+
+        
+
