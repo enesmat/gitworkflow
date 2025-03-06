@@ -12,16 +12,16 @@ jobs:
         run: winget install 7zip.7zip
 
         - name: Clone Introduction Repository #Repo klonen
-        uses: actions/checkout@v4
-        with:
-            repository: https://github.com/enesmat/Introduction.git
-            branch: main
-            
+        run: |
+            git clone https://github.com/enesmat/Introduction.git
+        
         - name: Compress Repo to 7z #Repo komprimieren
-          run: 7z a introduction-repo.7z
+          run: |
+            7z a -t7z introduction.7z
 
         - name: Print Message #Ausgabe
-        run: echo "Vorgang abgeschlossen"
+          run: | 
+          echo "Vorgang abgeschlossen"
 
         
 
