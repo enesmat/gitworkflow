@@ -1,27 +1,24 @@
 name: Repo to 7zip #Workflow Name
-
 on:
     workflow_dispatch: #Manuelles Triggern des Workflows
 
 jobs:
-    Repo to 7zip:
-    runs-on: ubuntu-latest
-
-    steps: #7zip installieren
-        - name: Install 7zip
-        run: winget install 7zip.7zip
-
-        - name: Clone Introduction Repository #Repo klonen
-        run: |
-            git clone https://github.com/enesmat/Introduction.git
-        
-        - name: Compress Repo to 7z #Repo komprimieren
-          run: |
-            7z a -t7z introduction.7z
-
-        - name: Print Message #Ausgabe
-          run: | 
-          echo "Vorgang abgeschlossen"
+    Repo_to_7zip:
+      runs-on: ubuntu-latest
+  
+      steps: #7zip installieren
+          - name: Install 7zip
+            run: sudo apt-get install p7zip-full -y
+  
+          - name: Clone Introduction Repository #Repo klonen
+            run: git clone https://github.com/enesmat/Introduction.git
+          
+          - name: Compress Repo to 7z #Repo komprimieren
+            run: 7z a -t7z introduction.7z
+  
+          - name: Print Message #Ausgabe
+            run: echo "Vorgang abgeschlossen"
+  
 
         
 
