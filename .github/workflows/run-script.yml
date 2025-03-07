@@ -9,8 +9,8 @@ jobs:
 
     steps:
     # Repository klonen
-    - name: Clone Repository
-      run: git clone https://github.com/enesmat/githubgarage.git
+    - name: Clone repository
+      uses: actions/checkout@v2
 
     # Shell-Skript ausführen
     - name: Run script.sh
