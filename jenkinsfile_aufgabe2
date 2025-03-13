@@ -1,0 +1,27 @@
+pipeline {
+    agent any 
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm  
+            }
+        }
+        stage('Set up Node.js') {
+            steps {
+                script {
+                    sh 'curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -'
+                    sh 'sudo apt-get install -y nodejs'  
+                }
+            }
+        }
+        stage('Install and Test') {
+            steps {
+                script {
+                    sh 'npm install'  
+                    sh 'npm test'     
+                }
+            }
+        }
+    }
+}
