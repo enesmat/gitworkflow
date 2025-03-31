@@ -1,0 +1,45 @@
+#Hausaufgabe: GitHub Actions – Docker herunterladen & Installations-Skript erstellen
+#Erstelle ein neues GitHub Repository und schreibe einen GitHub Actions Workflow, der:
+#Die neueste Docker-Version aus dem offiziellen Repository klont
+#Ein Installations-Skript (install-docker.sh) erstellt
+#Das Installations-Skript als Artefakt speichert, damit es später heruntergeladen und ausgeführt werden kann
+#📂 Anforderungen
+#Jeder Job soll in einer separaten Datei (.github/workflows/) liegen.
+#Das Installations-Skript soll automatisch generiert werden.
+#Das Skript soll später heruntergeladen und manuell ausgeführt werden können.
+#Falls ein Fehler auftritt, soll der Workflow fehlschlagen.
+#📌 Schritte für die Hausaufgabe
+#1️⃣ Ein neues Repository erstellen
+#Gehe zu GitHub → "New Repository"
+#Name: docker-install-action
+#Wähle "Public" oder "Private"
+#Aktiviere "Add a README file"""
+
+
+name: Docker Installation
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  download-docker:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Repository klonen
+      uses: actions/checkout@v2
+
+    - name: Installations-Skript erstellen
+      run: |
+        echo '#!/bin/bash' > install-docker.sh
+        echo 'curl -fsSL https://get.docker.com -o get-docker.sh' >> install-docker.sh
+        echo 'sh get-docker.sh' >> install-docker.sh
+        chmod +x install-docker.sh
+    
+    - name: Artefakt speichern
+      uses: actions/upload-artifact@v3
+      with:
+        name: install-docker-script
+        path: install-docker.sh

@@ -1,0 +1,38 @@
+pipeline {
+    agent any
+    stages {
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/enesmat/angular-frontend.git'
+            }
+        }
+        stage('Install dependencies') {
+            steps {
+                sh 'npm install'
+            }
+        }
+        stage('Build') {
+            steps {
+                sh 'npm run build'
+            }
+        }
+        stage('Package') {
+            steps {
+                sh '7z a angular_frontend_build.7z dist/*'
+                echo '7zip Datei erfolgreich erstellt.'
+            }
+        }
+    }
+    post {
+        always {
+            echo 'Cleaning up workspace'
+            sh 'rm -rf ./*'
+        }
+        success {
+            echo 'Pipeline war erfolgreich.'
+        }
+        failure {
+            echo 'Pipeline ist fehlgeschlagen.'
+        }
+    }
+}

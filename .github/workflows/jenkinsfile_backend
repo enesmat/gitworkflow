@@ -1,0 +1,50 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/enesmat/springboot-backend.git'
+            }
+        }
+        
+        stage('Build') {
+            steps {
+                sh 'mvn clean package'
+            }
+        }
+        
+        stage('Test') {
+            steps {
+                sh 'mvn test'
+            }
+        }
+        
+        stage('Package') {
+            steps {
+                script {
+                    sh '7z a springboot_backend_build.7z target/*'
+                  }
+            }
+        }
+        
+        stage('Deploy') {
+            steps {
+                echo 'Anwendung deployed'
+            }
+        }
+    }
+
+    post {
+        always {
+            echo 'Cleaning workspace'
+            sh 'rm -rf ./*'
+        }
+        failure {
+            echo 'Pipeline ist fehlgeschlagen.'
+        }
+        success {
+            echo 'Pipeline war erfolgreich.'
+        }
+    }
+}
